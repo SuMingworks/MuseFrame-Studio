@@ -87,6 +87,25 @@
         actions.remove();
         document.body.append(bottom);
         const scenePreview = document.getElementById('scenePreviewHero');
+        for (const panel of [
+          document.querySelector('.sidebar'),
+          hero.querySelector('.info'),
+          scenePreview.querySelector('.info'),
+        ]) {
+          panel.addEventListener('wheel', (event) => {
+            if (event.ctrlKey) return;
+            const scroller = event.target.closest('#planList, #scenePlanList');
+            const axis = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? 'x' : 'y';
+            const canScroll = (element) => {
+              if (!element) return false;
+              const style = getComputedStyle(element);
+              return axis === 'x'
+                ? /^(auto|scroll)$/.test(style.overflowX) && element.scrollWidth > element.clientWidth
+                : /^(auto|scroll)$/.test(style.overflowY) && element.scrollHeight > element.clientHeight;
+            };
+            if (!canScroll(scroller) && !canScroll(panel)) event.preventDefault();
+          }, { passive: false });
+        }
         const sceneImage = document.getElementById('scenePreviewImage');
         const sceneEmpty = document.getElementById('scenePreviewEmpty');
         const openScenePreview = document.getElementById('openScenePreview');

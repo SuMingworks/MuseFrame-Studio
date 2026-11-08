@@ -181,6 +181,8 @@
         if (k.startsWith('custom:')) {
           const file = customPresets[k.slice(7)]?.image;
           if (!file) return '';
+          const legacyKey = Object.keys(legacyImageFiles).find((key) => legacyImageFiles[key] === file);
+          if (legacyKey) return originalImagePath(legacyKey);
           const directory = Object.values(imageFiles).includes(file) ? 'images/characters/' : 'images/';
           return directory + file;
         }

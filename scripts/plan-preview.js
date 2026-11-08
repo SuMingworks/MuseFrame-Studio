@@ -1,4 +1,4 @@
-      const imageFiles = {
+      const legacyImageFiles = {
         mist: 'mist-blue.png',
         gothic: 'gothic-sweet.png',
         college: 'street-academy.png',
@@ -10,6 +10,12 @@
         dream: 'pastel-idol.png',
         navy: 'navy-academy.png',
       };
+      const imageFiles = Object.fromEntries(
+        [...Object.keys(legacyImageFiles), 'starMoon'].map((key) => [
+          key,
+          builtInPlans[key].label.replace('｜原创示范', '') + '.png',
+        ]),
+      );
       const descriptions = {
         mist: '雾蓝星屿 · 清冷幻想与银灰星轨',
         gothic: '暗色甜美 · 皮革百褶与银饰',
@@ -21,6 +27,7 @@
         future: '未来舞台 · 蓝白银科技感',
         dream: '梦幻偶像 · 粉蓝薄纱',
         navy: '海军学院 · 蓝白金制服',
+        starMoon: '深黑蓝波浪长发与冷灰蓝眼眸，搭配金色星座刺绣的午夜蓝宫廷礼服、弯月星芒发饰、蓝宝石首饰与前短后长的透明星纱裙摆。',
       };
       const palettes = {
         mist: ['#738aa9', '#ede8de', '#a9a8bb', '#5a4e51'],
@@ -33,6 +40,7 @@
         future: ['#375d9e', '#a8c9f4', '#e7edf6', '#b2b8c4'],
         dream: ['#e8a9ce', '#9bc7f4', '#f4e6f2', '#a8a2db'],
         navy: ['#263f6b', '#f7f5ef', '#cfad66', '#91a8c8'],
+        starMoon: ['#121c39', '#253354', '#a1b6d0', '#d1b581'],
       };
       const order = [
         'mist',
@@ -45,6 +53,7 @@
         'future',
         'dream',
         'navy',
+        'starMoon',
       ];
       function imagePath(k) {
         return imageFiles[k] ? 'images/characters/' + imageFiles[k] : '';
@@ -120,7 +129,7 @@
           img.removeAttribute('src');
           img.style.display = 'none';
           empty.hidden = false;
-          empty.textContent = '此自定义方案尚未配置本地预览图';
+          empty.textContent = '此方案尚未配置本地预览图';
         }
         document.getElementById('imageHint').textContent = changed.length
           ? '已修改参数，预览图仍对应原始方案'

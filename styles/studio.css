@@ -113,6 +113,7 @@
         top: 86px;
         max-height: calc(100vh - 100px);
         overflow: auto;
+        overscroll-behavior: contain;
       }
       .sidebar h2 {
         font-size: 16px;
@@ -192,6 +193,10 @@
         flex: 1 1 0;
         min-height: 320px;
         overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+      #planList {
+        overscroll-behavior: contain;
       }
       .preview img {
         width: 100%;
