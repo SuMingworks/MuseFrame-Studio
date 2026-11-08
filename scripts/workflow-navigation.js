@@ -90,9 +90,8 @@
         const sceneImage = document.getElementById('scenePreviewImage');
         const sceneEmpty = document.getElementById('scenePreviewEmpty');
         const openScenePreview = document.getElementById('openScenePreview');
-        const picturedLocations = new Set(['江南园林', '中式宫苑', '中性摄影棚']);
         function sceneImagePath(location) {
-          return picturedLocations.has(location)
+          return Object.hasOwn(sceneLocationCategory, location)
             ? 'images/scenes/' + encodeURIComponent(location) + '.png'
             : '';
         }
