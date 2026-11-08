@@ -82,20 +82,13 @@
           !confirm('当前角色有未保存修改。切换方案将舍弃当前草稿，是否继续？')
         ) {
           renderPresetSelect(activePlan);
-          return;
+          return false;
         }
         originalApplyV11(k);
         draftName.value = currentName();
         clearDraft();
+        return true;
       };
-      // Rebind direct handlers that previously captured old applyPreset behavior.
-      document.getElementById('preset').onchange = (e) => applyPreset(e.target.value);
-      document
-        .getElementById('preset')
-        .replaceWith(document.getElementById('preset').cloneNode(true));
-      document
-        .getElementById('preset')
-        .addEventListener('change', (e) => applyPreset(e.target.value));
       document.getElementById('restorePlan').onclick = () => {
         if (activePlan && confirm('恢复已保存的方案参数和名称？当前修改将丢失。')) {
           dirty = false;
@@ -103,8 +96,7 @@
         }
       };
       document.getElementById('reset').onclick = () => {
-        applyPreset('mist');
-        renderPresetSelect('mist');
+        if (applyPreset('mist')) renderPresetSelect('mist');
       };
       // Replace legacy "save" action with explicit save-as. Existing localStorage key stays unchanged.
       document.getElementById('savePreset').onclick = () => {

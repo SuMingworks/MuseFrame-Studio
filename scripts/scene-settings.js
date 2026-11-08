@@ -245,8 +245,6 @@
       }
       document.getElementById('sceneEnabled').addEventListener('change', (e) => {
         sceneSettings.enabled = e.target.checked;
-        if (e.target.checked && outputSettings.mode === 'poster')
-          sceneSettings.fusionEnabled = true;
         syncSceneControls();
         sceneChanged();
       });
@@ -321,19 +319,6 @@
         writeScenePresets(p);
         refreshScenePresetList();
       };
-      // V1.8: every output-mode switch applies that mode's default, regardless of prior scene edits.
-      // Scene parameters are retained; only the two enable switches change.
-      const v15ModeChange = document.getElementById('outputMode');
-      v15ModeChange.addEventListener('change', () => {
-        const poster = outputSettings.mode === 'poster';
-        sceneSettings.enabled = poster;
-        sceneSettings.fusionEnabled = poster;
-        sceneWasEdited = false;
-        syncSceneControls();
-        refreshSceneSummary();
-        generate();
-        storeDraft();
-      });
       refreshScenePresetList();
       syncSceneControls();
       refreshSceneSummary();

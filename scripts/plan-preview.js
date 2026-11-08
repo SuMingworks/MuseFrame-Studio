@@ -11,13 +11,18 @@
         navy: 'navy-academy.png',
       };
       const imageFiles = Object.fromEntries(
-        [...Object.keys(legacyImageFiles), 'starMoon'].map((key) => [
+        [...Object.keys(legacyImageFiles), 'starMoon', 'morningDew', 'berryStarCandy', 'neonPatrol', 'tidalGlass', 'creamWhisper'].map((key) => [
           key,
           builtInPlans[key].label.replace('｜原创示范', '') + '.png',
         ]),
       );
       const descriptions = {
         mist: '雾蓝星屿 · 清冷幻想与银灰星轨',
+        creamWhisper: '冬日柔甜 · 奶油毛绒帽与蕾丝针织',
+        tidalGlass: '深海潮汐 · 海玻璃肩饰与银蓝流体裙装',
+        neonPatrol: '近未来夜巡 · 黑青机能服与琥珀眼眸',
+        berryStarCandy: '原宿甜酷 · 樱花粉长卷发、星星贝雷帽与粉蓝不对称街装',
+        morningDew: '春日花园 · 薄荷蓝绿与奶油黄蕾丝',
         gothic: '暗色甜美 · 皮革百褶与银饰',
         college: '都市街头 · 休闲学院风',
         lolita: '古典花园 · 蕾丝与花卉',
@@ -31,6 +36,11 @@
       };
       const palettes = {
         mist: ['#738aa9', '#ede8de', '#a9a8bb', '#5a4e51'],
+        creamWhisper: ['#f4ecdc', '#dfd2c0', '#3b2928', '#d4a5a8'],
+        tidalGlass: ['#17354c', '#79b9b3', '#aabfcb', '#dce9e7'],
+        neonPatrol: ['#202528', '#28665f', '#a4adb0', '#d18b3d'],
+        berryStarCandy: ['#f2a9c4', '#a9cde5', '#fff4e5', '#b198bf'],
+        morningDew: ['#a8d8cc', '#f5e3a6', '#fff8eb', '#a8795d'],
         gothic: ['#1b1923', '#59515f', '#b5aebd', '#e7e2e9'],
         college: ['#46546b', '#d9d0bc', '#7f8c9d', '#302d33'],
         lolita: ['#c9a5b4', '#f2e7e0', '#b18f79', '#9c9b87'],
@@ -44,6 +54,11 @@
       };
       const order = [
         'mist',
+        'creamWhisper',
+        'tidalGlass',
+        'neonPatrol',
+        'berryStarCandy',
+        'morningDew',
         'gothic',
         'college',
         'lolita',
@@ -175,8 +190,7 @@
           meta.querySelector('small').textContent = desc;
           btn.append(meta);
           btn.onclick = () => {
-            applyPreset(k);
-            showTab('params');
+            if (k !== activePlan && applyPreset(k)) showTab('params');
           };
           box.append(btn);
         }

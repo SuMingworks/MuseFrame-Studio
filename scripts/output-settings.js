@@ -101,12 +101,11 @@
       };
       const applyBeforeOutput = applyPreset;
       applyPreset = function (k) {
-        const prior = activePlan;
-        applyBeforeOutput(k);
-        if (activePlan !== k) return;
+        if (!applyBeforeOutput(k) || activePlan !== k) return false;
         const saved = k.startsWith('custom:') ? customPresets[k.slice(7)] : null;
         setOutputSettings(saved?.outputSettings || outputDefaults);
         setSceneSettings(saved?.sceneSettings || sceneDefaults, false);
+        return true;
       };
       const saveAsBeforeOutput = document.getElementById('savePreset').onclick;
       // The existing save handlers already persist outputSettings, including subsequent updates.

@@ -54,7 +54,6 @@
           generate();
         });
         document.getElementById('outputMode').addEventListener('change', () => {
-          sceneSettings.application = defaults[outputSettings.mode];
           sync();
           generate();
           storeDraft();
@@ -105,8 +104,7 @@
           const app = current();
           const notices = [];
           const allowsAction = mode === 'full' || mode === 'poster';
-          const constrainedBackground = ['four', 'poses', 'details', 'face'].includes(mode);
-          const fixedBackground = constrainedBackground || app === 'subtle';
+          const fixedBackground = app === 'subtle';
           const uneditedBuiltIn =
             sceneLibrarySource === 'built' &&
             sceneLibraryText === sceneLibraryBuilt[sceneLibraryId];
@@ -154,9 +152,6 @@
             if (key === 'complexity' && fixedBackground) continue;
             environment.push(label + '：' + value);
           }
-          if (constrainedBackground && app !== 'subtle')
-            notices.push('当前模式优先保证人物展示，已限制背景细节密度');
-
           const interaction = p.interaction !== sceneDefaults.interaction ? p.interaction : '';
           const fusionAction = p.fusionEnabled && (p.explicit?.action || p.action !== sceneDefaults.action)
             ? p.action
