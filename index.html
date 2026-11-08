@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>灵感绘境 - 角色设计工作台 | MuseFrame Studio</title>
+    <link rel="stylesheet" href="styles/studio.css">
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <span class="logo">✦</span>
+        <div>
+          <strong
+            >灵感绘境 <span style="font-size: 12px; color: #e3d6f5">MuseFrame Studio</span></strong
+          ><small>角色造型 · 多模式出图 · 提示词创作</small>
+        </div>
+      </div>
+      <nav class="topnav">
+        <button class="active" onclick="document.getElementById('planList').scrollIntoView()">
+          ⌂ 角色设计</button
+        ><button id="navLibrary">▤ 词库管理</button><button id="navSaved">▣ 我的方案</button
+        ><button id="navImport">↥ 导入配置</button><button id="navExport">↧ 导出配置</button>
+      </nav>
+      <span class="topright">V2.1 · 五阶段工作台</span>
+    </header>
+    <div class="shell">
+      <aside class="sidebar panel">
+        <h2>◈ 角色造型方案 <small>（10）</small></h2>
+        <div id="planList" class="plan-list"></div>
+      </aside>
+      <main class="main">
+        <div class="hero">
+          <section class="preview panel">
+            <img id="mainImage" alt="当前角色四视图预览" />
+            <div id="imageEmpty" class="image-empty" hidden>此自定义方案尚未配置本地预览图</div>
+            <button class="floating" id="openImage">⤢ 放大查看</button>
+            <div class="preview-foot" id="imageHint">图片来自本地 images 文件夹</div>
+          </section>
+          <aside class="info panel">
+            <h2 id="sideTitle">雾蓝星屿</h2>
+            <div id="nameEditorStaging" hidden>
+              <div class="name-editor" id="nameEditor">
+                <label for="quickName">角色名称（可编辑）</label
+                ><input id="quickName" maxlength="80" placeholder="输入当前角色名称" />
+              </div>
+            </div>
+            <span id="saveState" class="small">已加载内置方案</span>
+            <div id="chips" class="chips"></div>
+            <div class="line"></div>
+            <h3>✦ 方案描述</h3>
+            <p id="sideDesc"></p>
+            <div class="line"></div>
+            <h3>◉ 配色方案</h3>
+            <div id="swatches" class="swatches"></div>
+            <div class="line"></div>
+            <h3>✧ 方案完整性</h3>
+            <span id="integrityBadge" class="status">参数已同步</span>
+            <p>切换角色方案会同步载入全部25项参数；手动调整不会自动改变静态预览图。</p>
+          </aside>
+        </div>
+
+        <div class="hero" id="scenePreviewHero" hidden>
+          <section class="preview panel">
+            <img id="scenePreviewImage" alt="" hidden />
+            <div id="scenePreviewEmpty" class="image-empty">此地点尚未配置预览图</div>
+            <button type="button" class="floating" id="openScenePreview" hidden>⤢ 放大查看</button>
+          </section>
+          <aside class="info panel">
+            <h3>✦ 场景预览</h3>
+            <h2 id="scenePreviewTitle"></h2>
+            <p id="scenePreviewCategory"></p>
+            <div class="plan-list" id="scenePlanList" aria-label="场景方案"></div>
+          </aside>
+        </div>
+
+        <section class="scene-panel panel" aria-label="场景与人物融合设置">
+          <h3>✦ 场景与氛围 · 人物场景融合</h3>
+          <div class="scene-tabs">
+            <button type="button" class="active" data-scene-tab="scene">场景参数（12项）</button
+            ><button type="button" data-scene-tab="fusion">人物与场景融合（6项）</button>
+          </div>
+          <div id="scenePane">
+            <label class="scene-toggle"
+              ><input type="checkbox" id="sceneEnabled" />
+              启用场景（切换模式时自动设置：仅场景海报默认开启；其他模式默认关闭，可手动开启）</label
+            >
+            <div class="scene-subhead">场景设定</div>
+            <div class="scene-fields" id="sceneFields"></div>
+            <div class="scene-actions">
+              <select id="scenePreset" aria-label="已保存场景预设">
+                <option value="">加载我的场景方案</option></select
+              ><button type="button" id="saveScenePreset">＋ 另存为场景方案</button
+              ><button type="button" id="updateScenePreset">保存当前方案修改</button
+              ><button type="button" id="deleteScenePreset">删除我的方案</button>
+            </div>
+          </div>
+          <div class="scene-library" id="sceneLibrary">
+            <h4>✧ 场景核心提示词</h4>
+            <p class="lib-hint">
+              根据上方具体地点自动加载内置专业提示词；可编辑后连同时间、天气、光照等一起保存到「我的场景方案」。
+            </p>
+            <div class="lib-grid" style="display: none">
+              <label
+                >场景来源<select id="sceneLibrarySource">
+                  <option value="built">内置场景模板</option>
+                  <option value="mine">我的场景模板</option>
+                </select></label
+              ><label>场景模板<select id="sceneLibrarySelect"></select></label>
+            </div>
+            <label style="display: flex; gap: 6px; align-items: center; margin: 10px 0"
+              ><input type="checkbox" id="sceneLibraryUse" checked style="width: auto" />
+              将场景核心提示词加入生成结果（仅场景启用时生效）</label
+            ><label style="display: block"
+              >场景核心提示词（可编辑）<textarea
+                id="sceneLibraryText"
+                placeholder="选择模板后显示可编辑的场景提示词"
+              ></textarea>
+            </label>
+            <div class="lib-buttons">
+              <button type="button" id="sceneLibraryCopy">复制提示词</button
+              ><button type="button" id="sceneLibraryReset">恢复内置原文</button
+              ><button type="button" class="primary" id="sceneLibrarySave" hidden>
+                ＋ 另存为我的场景</button
+              ><button type="button" id="sceneLibraryUpdate" hidden>保存我的修改</button
+              ><button type="button" id="sceneLibraryDelete" hidden>删除我的场景</button>
+            </div>
+            <p class="lib-hint" id="sceneLibraryHint">
+              内置模板只读；编辑后可另存为个人模板。模板只控制环境，不改变角色外观。
+            </p>
+          </div>
+          <div id="fusionPane" hidden>
+            <label class="scene-toggle"
+              ><input type="checkbox" id="fusionEnabled" /> 启用人物场景融合</label
+            >
+            <div class="scene-subhead">融合控制</div>
+            <div class="scene-fields" id="fusionFields"></div>
+          </div>
+          <div class="scene-summary" id="sceneSummary"></div>
+          <p class="scene-note">
+            场景和融合只影响提示词，不会修改人物外观参数或本地预览图。我的场景方案可跨角色复用；内置场景核心提示词会按地点自动匹配。
+          </p>
+        </section>
+        <section class="output-panel panel" aria-label="画面输出设置">
+          <h3>✦ 出图方案与画面输出设置</h3>
+          <div class="output-controls">
+            <label
+              >出图方案<select id="outputMode">
+                <option value="four">四视图设定图</option>
+                <option value="full">单人全身立绘</option>
+                <option value="face">面部肖像特写</option>
+                <option value="poses">三姿态展示</option>
+                <option value="poster">场景氛围海报</option>
+                <option value="details">服装细节展示</option>
+              </select></label
+            ><label
+              >图片比例<select id="outputRatio">
+                <option>16:9</option>
+                <option>3:2</option>
+                <option>4:3</option>
+                <option>1:1</option>
+                <option>3:4</option>
+                <option>9:16</option>
+              </select></label
+            ><label
+              >目标分辨率<select id="outputResolution">
+                <option>1K</option>
+                <option selected>2K</option>
+                <option>4K</option>
+              </select></label
+            ><label
+              >画质档位<select id="outputQuality">
+                <option>标准</option>
+                <option selected>精细</option>
+                <option>极致</option>
+              </select></label
+            >
+          </div>
+          <div class="output-summary" id="outputSummary"></div>
+        </section>
+        <div class="work" id="workspaceTabs">
+          <section class="work-main panel">
+            <div class="tabs">
+              <button class="active" data-tab="params">详细参数配置（25项）</button
+              ><button data-tab="prompt">生成提示词</button
+              ><button data-tab="integrity">方案完整性检查</button
+              ><span id="integrityBadgeMini" class="small"></span>
+            </div>
+            <div class="pane" data-pane="params"><div id="groups" class="params"></div></div>
+            <div class="pane" data-pane="prompt" hidden>
+              <div class="small" id="counter"></div>
+              <div id="conflictNotice" class="notice" style="display: none"></div>
+              <textarea id="output" spellcheck="false"></textarea>
+            </div>
+            <div class="pane" data-pane="integrity" hidden>
+              <div id="integrityReport" class="notice"></div>
+              <p class="small">
+                完整性检查可检测与方案基线不同的字段及部分已知服装结构冲突，不等同于图片自动识别。
+              </p>
+            </div>
+          </section>
+          <aside class="actions panel">
+            <button id="generateMain" class="primary">✧ 生成完整提示词</button
+            ><button id="copy">▢ 复制提示词</button><button id="txt">↓ 下载 TXT</button
+            ><button id="save">↓ 下载 JSON</button><button id="savePreset">♡ 另存为新方案</button
+            ><button id="updatePreset">✓ 保存修改</button
+            ><button id="restorePlan">↺ 恢复当前方案</button>
+          </aside>
+        </div>
+        <div class="drawer panel" id="libraryPanel" hidden>
+          <button class="close" id="closeLibrary">关闭 ×</button>
+          <h2>自定义提示词库</h2>
+          <p class="small">保留原有全部内置词条，新增选项仅保存到本机浏览器。</p>
+          <div class="row">
+            <select id="addField"></select
+            ><input
+              id="addValue"
+              placeholder="输入新的完整描述"
+              style="flex: 1; min-width: 180px"
+            /><button id="addOption">添加到词库</button>
+          </div>
+          <div class="row">
+            <button id="exportLibrary">导出词库 JSON</button
+            ><button id="importLibrary">导入词库 JSON</button
+            ><span id="optionMsg" class="small"></span>
+          </div>
+        </div>
+        <div class="drawer panel" id="savedPanel" hidden>
+          <button class="close" id="closeSaved">关闭 ×</button>
+          <h2>方案管理</h2>
+          <p class="small" id="presetInfo"></p>
+          <div class="row">
+            <label>当前方案</label
+            ><select id="preset"></select
+            ><label>角色名称</label><input id="characterName" value="雾蓝星屿" /><button
+              id="deletePreset"
+            >
+              删除已保存方案</button
+            ><button id="exportAll">备份全部方案与词库</button
+            ><button id="importAll">恢复完整备份</button
+            ><input type="file" id="allBackupFile" accept=".json,application/json" hidden /><button
+              id="reset"
+            >
+              恢复默认角色
+            </button>
+          </div>
+          <p class="small">
+            内置方案不会被覆盖；草稿自动暂存，正式保存请点击“另存为新方案”或“保存修改”。完整备份可恢复个人方案及自定义词库。
+          </p>
+        </div>
+        <div class="footer">
+          灵感绘境 · MuseFrame Studio · 图片读取 images/ 下的本地 PNG 文件 · 提示词编辑无需联网
+        </div>
+      </main>
+    </div>
+    <div class="hidden-legacy"><button id="loadJson"></button></div>
+    <input type="file" id="fileJson" accept="application/json,.json" hidden /><input
+      type="file"
+      id="libraryFile"
+      accept="application/json,.json"
+      hidden
+    />
+    <dialog id="imageModal">
+      <button id="closeModal">关闭 ×</button><img id="modalImg" alt="四视图大图" />
+    </dialog>
+    <script src="scripts/character-schema.js"></script>
+    <script src="scripts/character-editor.js"></script>
+    <script src="scripts/plan-preview.js"></script>
+    <script src="scripts/plan-storage.js"></script>
+    <script src="scripts/output-settings.js"></script>
+    <script src="scripts/scene-settings.js"></script>
+    <script src="scripts/scene-library.js"></script>
+    <script src="scripts/startup.js"></script>
+    <script src="scripts/scene-application.js"></script>
+    <script src="scripts/workflow-navigation.js"></script>
+  </body>
+</html>
