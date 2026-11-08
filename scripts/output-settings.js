@@ -14,6 +14,11 @@
           '画面仅出现一位完整人物，从头顶到鞋底完整入镜，突出服装整体剪裁和人物气质',
           '正面或轻微三分之四视角，保持单人单画面',
         ],
+        group: [
+          '双人同框构图',
+          '单幅连续画面中恰好有两位不同角色，按各自的左右站位全身入镜，轮廓清晰可辨',
+          '每位角色保留自己对应的五官、发型和服装；两人共享一致的透视、空间尺度和主光方向',
+        ],
         face: [
           '面部肖像特写构图',
           '画面仅出现一个人物头肩肖像，清晰展示脸型、眼部、妆容、发际线、头饰和耳饰',
@@ -48,6 +53,27 @@
         精细: '高质量PBR材质、适度皮肤SSS、清晰发束、可信织物纹理和精确接缝',
         极致: '高精度PBR和皮肤次表面散射，微观纤维、细腻发丝、精确金属反射、复杂配饰和一致的材质细节',
       };
+      function groupRoleSnapshot(record, action = '') {
+        if (!record?.values || typeof record.values !== 'object') return null;
+        return {
+          name: typeof record.name === 'string' && record.name.trim() || '未命名角色',
+          values: Object.fromEntries(fields.map(([key, , choices]) => [
+            key,
+            typeof record.values[key] === 'string' ? record.values[key] : choices[0],
+          ])),
+          customFields: [...readCustomFields(record)],
+          action,
+        };
+      }
+      function normalizeGroup(group) {
+        return {
+          roles: [0, 1].map((index) => {
+            const role = Array.isArray(group?.roles) ? group.roles[index] : null;
+            return groupRoleSnapshot(role, typeof role?.action === 'string' ? role.action : '');
+          }),
+          interaction: typeof group?.interaction === 'string' ? group.interaction : '',
+        };
+      }
       function normalizeOutputSettings(o) {
         const n = { ...outputDefaults };
         if (o && typeof o === 'object') {
@@ -63,8 +89,87 @@
             if (choices.includes(o[k])) n[k] = o[k];
           }
         }
+        if (o?.group || n.mode === 'group') n.group = normalizeGroup(o?.group);
         return n;
       }
+      const groupOutput = document.getElementById('groupOutput');
+      const groupInteraction = document.getElementById('groupInteraction');
+      function setupGroupChoice(select, custom, optionsId, onChange) {
+        select.append(new Option('请选择', ''));
+        document.querySelectorAll('#' + optionsId + ' option').forEach((option) =>
+          select.append(new Option(option.value, option.value)));
+        select.append(new Option('自定义…', '__custom__'));
+        select.addEventListener('change', () => {
+          custom.hidden = select.value !== '__custom__';
+          if (!custom.hidden) custom.focus();
+          onChange(custom.hidden ? select.value : custom.value);
+        });
+        custom.addEventListener('input', () => onChange(custom.value));
+        return (value) => {
+          const preset = [...select.options].some((option) => option.value === value && value !== '__custom__');
+          select.value = preset ? value : '__custom__';
+          custom.hidden = preset;
+          custom.value = preset ? '' : value;
+        };
+      }
+      const refreshInteraction = setupGroupChoice(
+        groupInteraction, document.getElementById('groupInteractionCustom'), 'groupInteractionOptions',
+        (value) => {
+          outputSettings.group = { ...outputSettings.group, interaction: value };
+          generate();
+          storeDraft();
+        },
+      );
+      function updateGroup(group, index, role) {
+        const roles = [...group.roles];
+        roles[index] = role;
+        outputSettings.group = { ...group, roles };
+        generate();
+        storeDraft();
+      }
+      const groupControls = ['左侧', '右侧'].map((position, index) => {
+        const slot = document.createElement('div');
+        slot.innerHTML = `
+          <label>${position}角色<select aria-label="${position}角色预设"></select></label>
+          <div class="small" aria-live="polite"></div>
+          <button type="button">用当前编辑人物</button>
+          <button type="button">移除</button>
+          <label>${position}动作<select class="group-action"></select><input class="group-action-custom" placeholder="输入自定义动作" hidden /></label>`;
+        document.getElementById('groupRoles').append(slot);
+        const select = slot.querySelector('select');
+        const status = slot.querySelector('.small');
+        const [useCurrent, remove] = slot.querySelectorAll('button');
+        const action = slot.querySelector('.group-action');
+        const refreshAction = setupGroupChoice(action, slot.querySelector('.group-action-custom'), 'groupActionOptions', (value) => {
+          const group = outputSettings.group;
+          updateGroup(group, index, { ...group.roles[index], action: value });
+        });
+        const refresh = () => {
+          const role = outputSettings.group?.roles[index];
+          select.replaceChildren(new Option('选择人物预设…', ''));
+          for (const item of document.getElementById('preset').children)
+            select.append(item.cloneNode(true));
+          select.value = '';
+          status.textContent = role ? '已加入：' + role.name : '尚未加入角色';
+          refreshAction(role?.action || '');
+          action.disabled = remove.disabled = !role;
+        };
+        const replace = (record) => {
+          updateGroup(outputSettings.group, index, groupRoleSnapshot(record));
+          refresh();
+        };
+        select.addEventListener('focus', refresh);
+        select.addEventListener('change', () => {
+          const key = select.value;
+          if (!key) return;
+          replace(key.startsWith('custom:')
+            ? customPresets[key.slice(7)]
+            : { name: builtInPlans[key].label, values: snapshotForPlan(key) });
+        });
+        useCurrent.onclick = () => replace({ name: currentName(), values, customFields: [...customFields] });
+        remove.onclick = () => replace(null);
+        return refresh;
+      });
       function refreshOutputControls() {
         for (const [id, key] of [
           ['outputMode', 'mode'],
@@ -73,6 +178,12 @@
           ['outputQuality', 'quality'],
         ])
           document.getElementById(id).value = outputSettings[key];
+        groupOutput.hidden = outputSettings.mode !== 'group';
+        if (!groupOutput.hidden) {
+          outputSettings.group ??= normalizeGroup();
+          groupControls.forEach((refresh) => refresh());
+          refreshInteraction(outputSettings.group.interaction);
+        }
         const [w, h] = outputDims[outputSettings.ratio][outputSettings.resolution];
         document.getElementById('outputSummary').textContent =
           `当前：${document.getElementById('outputMode').selectedOptions[0].textContent} · ${outputSettings.ratio} · ${outputSettings.resolution}（目标 ${w} × ${h} 像素）· ${outputSettings.quality}画质。实际像素由外部图像生成工具决定。`;
@@ -97,12 +208,18 @@
       promptOutput = () => {
         const { mode, ratio, quality } = outputSettings;
         const [title, ...framing] = outputModeDescriptions[mode];
-        return { mode, title, framing, ratio, quality: qualityDescriptions[quality] };
+        const group = mode === 'group' ? outputSettings.group : undefined;
+        return { mode, title, framing, ratio, quality: qualityDescriptions[quality], group };
       };
       const applyBeforeOutput = applyPreset;
       applyPreset = function (k) {
+        const keepGroup = outputSettings.mode === 'group';
         if (!applyBeforeOutput(k) || activePlan !== k) return false;
         const saved = k.startsWith('custom:') ? customPresets[k.slice(7)] : null;
+        if (keepGroup && saved?.outputSettings?.mode !== 'group') {
+          storeDraft();
+          return true;
+        }
         setOutputSettings(saved?.outputSettings || outputDefaults);
         setSceneSettings(saved?.sceneSettings || sceneDefaults, false);
         return true;

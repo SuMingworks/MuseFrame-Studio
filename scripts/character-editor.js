@@ -684,18 +684,12 @@
       // Later scripts supply settings after their controls and state are initialized.
       let promptOutput = () => ({ mode: 'four', title: '四视图摄影与一致性', framing: [] });
       let promptScene = () => ({ enabled: false, blocks: [] });
-      function generate() {
+      function characterPromptBlocks(characterValues, authoredFields, portrait) {
         const v = Object.fromEntries(fields.map(([key]) => {
-          const value = values[key];
-          return [key, customFields.has(key) ? value : (builtInAppearance[key].get(value) ?? value)];
+          const value = characterValues[key];
+          return [key, authoredFields.has(key) ? value : (builtInAppearance[key].get(value) ?? value)];
         }));
-        const name = document.getElementById('characterName').value.trim() || '未命名角色';
-        const { mode, title, framing, ratio, quality } = promptOutput();
-        const scene = promptScene(mode);
-        const portrait = mode === 'face';
-        const blocks = [
-          '# ' + name + '｜原创角色 · ' + title,
-          '',
+        return [
           section('01 · 美术定位', [
             '原创成年女性角色',
             v.style,
@@ -740,14 +734,36 @@
             ]),
             '',
           ]),
-          section('05 · ' + title, [
-            ...framing,
-            ...(!scene.enabled ? [
-              mode === 'four' ? '浅灰无缝影棚背景' : '简洁背景，主体轮廓清晰',
-            ] : []),
-            ratio && '画面比例 ' + ratio,
-          ]),
+        ];
+      }
+      function generate() {
+        const name = document.getElementById('characterName').value.trim() || '未命名角色';
+        const { mode, title, framing, ratio, quality, group } = promptOutput();
+        const scene = promptScene(mode);
+        const incomplete = group && group.roles.some((role) => !role);
+        const composition = section(group ? title : '05 · ' + title, [
+          ...framing,
+          ...(!scene.enabled ? [
+            mode === 'four' ? '浅灰无缝影棚背景' : '简洁背景，主体轮廓清晰',
+          ] : []),
+          ratio && '画面比例 ' + ratio,
+          group?.interaction && '两人互动：' + group.interaction,
+        ]);
+        const characterBlocks = group
+          ? group.roles.flatMap((role, index) => {
+              if (!role) return [];
+              const position = index === 0 ? '画面左侧' : '画面右侧';
+              return [
+                '## 角色' + (index + 1) + ' · ' + position + ' · ' + role.name,
+                role.action ? '动作：' + role.action : '',
+                ...characterPromptBlocks(role.values, readCustomFields(role), false),
+              ];
+            })
+          : characterPromptBlocks(values, customFields, mode === 'face');
+        const blocks = [
+          '# ' + (group ? '多人同框 · 双人' : name + '｜原创角色 · ' + title),
           '',
+          ...(group ? [composition, '', ...characterBlocks] : [...characterBlocks, composition, '']),
           section('06 · 材质与画面质量', [
             quality,
             '清晰的主体轮廓与可信的材质细节',
@@ -755,9 +771,12 @@
           ]),
           ...scene.blocks.flatMap((block) => ['', block]),
         ];
-        const out = blocks.join('\n');
+        const out = incomplete ? '' : blocks.join('\n');
+        document.getElementById('copy').disabled = Boolean(incomplete);
+        document.getElementById('txt').disabled = Boolean(incomplete);
         document.getElementById('output').value = out;
         document.getElementById('counter').textContent =
+          incomplete ? '请先在出图设置中为左右站位各选一个角色。' :
           `约 ${out.length} 字符 · ${title}${ratio ? ' · ' + ratio : ''}`;
         const issues = detectConflicts(),
           notice = document.getElementById('conflictNotice');

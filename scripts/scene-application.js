@@ -16,6 +16,7 @@
         const defaults = {
           four: 'subtle',
           full: 'integrated',
+          group: 'integrated',
           face: 'subtle',
           poses: 'subtle',
           poster: 'complete',
@@ -156,7 +157,9 @@
           const fusionAction = p.fusionEnabled && (p.explicit?.action || p.action !== sceneDefaults.action)
             ? p.action
             : '';
-          if (!allowsAction && (interaction || fusionAction))
+          if (mode === 'group' && (interaction || fusionAction || (p.fusionEnabled && p.position)))
+            notices.push('多人同框使用双人阵容中的站位与动作');
+          if (mode !== 'group' && !allowsAction && (interaction || fusionAction))
             notices.push('当前模式的构图或姿态已固定，未追加环境互动动作');
           if (allowsAction && interaction && fusionAction && interaction !== fusionAction)
             notices.push('环境互动与融合动作同时设置，采用融合动作');
@@ -166,7 +169,7 @@
             p.fusionEnabled && '人物与环境共享一致的空间尺度、透视和主光方向',
           ];
           if (p.fusionEnabled) {
-            if (!fixedBackground && p.position) fusion.push('人物位置：' + p.position);
+            if (mode !== 'group' && !fixedBackground && p.position) fusion.push('人物位置：' + p.position);
             if (!fixedBackground && app === 'integrated' && p.strength)
               fusion.push('视觉重心：' + p.strength);
             if (p.color) fusion.push('色彩融合：' + p.color);

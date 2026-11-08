@@ -149,6 +149,7 @@
               >出图方案<select id="outputMode">
                 <option value="four">四视图设定图</option>
                 <option value="full">单人全身立绘</option>
+                <option value="group">多人同框（双人）</option>
                 <option value="face">面部肖像特写</option>
                 <option value="poses">三姿态展示</option>
                 <option value="poster">场景氛围海报</option>
@@ -178,6 +179,33 @@
             >
           </div>
           <div class="output-summary" id="outputSummary"></div>
+          <fieldset id="groupOutput" hidden>
+            <legend>双人阵容</legend>
+            <p class="small">从人物预设直接选取，或将当前编辑的人物加入指定站位。加入后保留当时的参数。</p>
+            <div class="output-controls" id="groupRoles"></div>
+            <div class="output-controls">
+              <label>两人互动<select id="groupInteraction"></select><input id="groupInteractionCustom" placeholder="输入自定义互动" hidden /></label>
+            </div>
+            <datalist id="groupActionOptions">
+              <option value="自然站立"></option>
+              <option value="侧身望向对方"></option>
+              <option value="微笑挥手"></option>
+              <option value="向前迈步"></option>
+              <option value="伸手递出一枝花"></option>
+              <option value="伸手接过花枝"></option>
+              <option value="抬手指向远处"></option>
+              <option value="双手捧着道具"></option>
+            </datalist>
+            <datalist id="groupInteractionOptions">
+              <option value="两人并肩站立，一同望向镜头"></option>
+              <option value="两人相向而立，微笑对视"></option>
+              <option value="两人并肩行走，侧头交谈"></option>
+              <option value="左侧角色递出花枝，右侧角色伸手接过"></option>
+              <option value="左侧角色指向远处，右侧角色顺着手势望去"></option>
+              <option value="两人共撑一把伞，沿小路缓步前行"></option>
+              <option value="两人背靠背站立，分别望向画面两侧"></option>
+            </datalist>
+          </fieldset>
         </section>
         <div class="work" id="workspaceTabs">
           <section class="work-main panel">
