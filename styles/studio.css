@@ -355,6 +355,19 @@
       .drawer[hidden] {
         display: none;
       }
+      .face-check {
+        border: 1px solid #e5deee;
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 12px;
+      }
+      .face-check h3 { margin: 0; color: #7655a8; }
+      .face-check-list { display: grid; gap: 8px; }
+      .face-check-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+      .face-check-item strong { font-size: 13px; }
+      .face-check-filled { color: #38745a; font-size: 12px; white-space: nowrap; }
+      .face-check-missing { color: #a45e32; font-size: 12px; white-space: nowrap; }
+      .face-check-count { border-top: 1px solid #eee8f5; margin: 12px 0 0; padding-top: 10px; font-weight: 600; }
       .params {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -552,6 +565,139 @@
         border-radius: 7px;
         padding: 7px 12px;
       }
+      /* 角色与场景预览：铺满整个视口的全屏查看 */
+      #imageModal {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: #0c0a11;
+        box-shadow: none;
+        overflow: hidden;
+      }
+      #imageModal::backdrop {
+        background: #0c0a11;
+      }
+      /* 查看器打开时锁住页面滚动，避免右侧残留滚动条或被背景滚动带走 */
+      html.viewer-open,
+      html.viewer-open body {
+        overflow: hidden;
+      }
+      #imageModal img {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        object-fit: contain;
+        display: block;
+        cursor: default;
+      }
+      #imageModal .viewer-toolbar {
+        position: fixed;
+        top: max(16px, env(safe-area-inset-top, 0px));
+        right: max(16px, env(safe-area-inset-right, 0px));
+        z-index: 3;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 8px;
+        max-width: calc(100vw - 32px);
+      }
+      #imageModal .viewer-hint {
+        max-width: min(58vw, 460px);
+        padding: 9px 14px;
+        border: 1px solid #ffffff1f;
+        border-radius: 999px;
+        background: #16121de6;
+        color: #fff;
+        font-size: 13px;
+        line-height: 1.4;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 24px #0008;
+      }
+      #imageModal .viewer-hint[hidden] {
+        display: none;
+      }
+      #imageModal .viewer-toolbar button[hidden] {
+        display: none;
+      }
+      #imageModal .viewer-toolbar button,
+      #imageModal .viewer-arrow {
+        float: none;
+        margin: 0;
+        border: 1px solid #ffffff33;
+        border-radius: 999px;
+        background: #16121de6;
+        color: #fff;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 24px #0008;
+      }
+      #imageModal .viewer-toolbar button {
+        padding: 9px 14px;
+        font-size: 13px;
+      }
+      #imageModal .viewer-toolbar button:hover,
+      #imageModal .viewer-arrow:hover {
+        background: #2a2338f2;
+      }
+      #imageModal .viewer-arrow {
+        position: fixed;
+        top: 50%;
+        z-index: 2;
+        width: 56px;
+        height: 56px;
+        padding: 0;
+        transform: translateY(-50%);
+        display: grid;
+        place-items: center;
+        font-size: 30px;
+        line-height: 1;
+      }
+      #imageModal .viewer-arrow.prev {
+        left: max(16px, env(safe-area-inset-left, 0px));
+      }
+      #imageModal .viewer-arrow.next {
+        right: max(16px, env(safe-area-inset-right, 0px));
+      }
+      #imageModal .viewer-arrow[hidden],
+      #imageModal .viewer-caption[hidden] {
+        display: none;
+      }
+      #imageModal .viewer-caption {
+        position: fixed;
+        bottom: max(18px, env(safe-area-inset-bottom, 0px));
+        left: 50%;
+        z-index: 2;
+        max-width: 82vw;
+        padding: 8px 14px;
+        transform: translateX(-50%);
+        border: 1px solid #ffffff1f;
+        border-radius: 999px;
+        background: #16121dcc;
+        color: #fff;
+        font-size: 13px;
+        line-height: 1.4;
+        text-align: center;
+        backdrop-filter: blur(8px);
+      }
+      @media (max-width: 600px) {
+        #imageModal .viewer-arrow {
+          width: 44px;
+          height: 44px;
+          font-size: 24px;
+        }
+        #imageModal .viewer-toolbar button {
+          padding: 8px 10px;
+        }
+      }
       @media (max-width: 1180px) {
         .hero {
           grid-template-columns: minmax(0, 1fr) 230px;
@@ -704,6 +850,18 @@
         background: #faf8ff;
         color: #493d62;
       }
+      .output-mode-guide {
+        margin-top: 10px;
+        padding: 10px 12px;
+        border: 1px solid #e5ddef;
+        border-radius: 8px;
+        background: #faf8ff;
+        color: #594b70;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+      .output-mode-guide p { margin: 0; }
+      .output-mode-guide p + p { margin-top: 4px; }
       .output-summary {
         margin-top: 10px;
         font-size: 12px;

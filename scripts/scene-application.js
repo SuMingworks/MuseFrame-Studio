@@ -15,6 +15,7 @@
         toggle.closest('label').insertAdjacentElement('afterend', label);
         const defaults = {
           four: 'subtle',
+          five: 'subtle',
           full: 'integrated',
           group: 'integrated',
           face: 'subtle',

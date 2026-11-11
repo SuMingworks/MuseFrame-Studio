@@ -35,7 +35,7 @@
           <section class="preview panel">
             <img id="mainImage" alt="当前角色四视图预览" />
             <div id="imageEmpty" class="image-empty" hidden>此自定义方案尚未配置本地预览图</div>
-            <button class="floating" id="openImage">⤢ 放大查看</button>
+            <button class="floating" id="openImage">⤢ 全屏查看</button>
             <div class="preview-foot" id="imageHint">图片来自本地 images 文件夹</div>
           </section>
           <aside class="info panel">
@@ -57,7 +57,7 @@
             <div class="line"></div>
             <h3>✧ 方案完整性</h3>
             <span id="integrityBadge" class="status">参数已同步</span>
-            <p>切换角色方案会同步载入全部25项参数；手动调整不会自动改变静态预览图。</p>
+            <p>切换角色方案会同步载入全部30项参数；手动调整不会自动改变静态预览图。</p>
           </aside>
         </div>
 
@@ -65,7 +65,7 @@
           <section class="preview panel">
             <img id="scenePreviewImage" alt="" hidden />
             <div id="scenePreviewEmpty" class="image-empty">此地点尚未配置预览图</div>
-            <button type="button" class="floating" id="openScenePreview" hidden>⤢ 放大查看</button>
+            <button type="button" class="floating" id="openScenePreview" hidden>⤢ 全屏查看</button>
           </section>
           <aside class="info panel">
             <h3>✦ 场景预览</h3>
@@ -148,12 +148,15 @@
             <label
               >出图方案<select id="outputMode">
                 <option value="four">四视图设定图</option>
+                <option value="five">五分区角色</option>
                 <option value="full">单人全身立绘</option>
                 <option value="group">多人同框（双人）</option>
                 <option value="face">面部肖像特写</option>
                 <option value="poses">三姿态展示</option>
                 <option value="poster">场景氛围海报</option>
                 <option value="details">服装细节展示</option>
+                <option value="characterBoard">人物设定展示板</option>
+                <option value="fashionBoard">服装设计展示板</option>
               </select></label
             ><label
               >图片比例<select id="outputRatio">
@@ -178,6 +181,7 @@
               </select></label
             >
           </div>
+          <div class="output-mode-guide" id="outputModeGuide" aria-live="polite"></div>
           <div class="output-summary" id="outputSummary"></div>
           <fieldset id="groupOutput" hidden>
             <legend>双人阵容</legend>
@@ -210,7 +214,7 @@
         <div class="work" id="workspaceTabs">
           <section class="work-main panel">
             <div class="tabs">
-              <button class="active" data-tab="params">详细参数配置（25项）</button
+              <button class="active" data-tab="params">详细参数配置（30项）</button
               ><button data-tab="prompt">生成提示词</button
               ><button data-tab="integrity">方案完整性检查</button
               ><span id="integrityBadgeMini" class="small"></span>
@@ -222,6 +226,12 @@
               <textarea id="output" spellcheck="false"></textarea>
             </div>
             <div class="pane" data-pane="integrity" hidden>
+              <section class="face-check" aria-labelledby="faceCheckTitle">
+                <h3 id="faceCheckTitle">面部辨识度 · 文字完整性</h3>
+                <p class="small">自动检查六项是否填写了文字；不能判断描述是否具体或与参考图一致。</p>
+                <div id="faceCheckList" class="face-check-list"></div>
+                <p id="faceCheckCount" class="face-check-count" aria-live="polite"></p>
+              </section>
               <div id="integrityReport" class="notice"></div>
               <p class="small">
                 完整性检查可检测与方案基线不同的字段及部分已知服装结构冲突，不等同于图片自动识别。
@@ -289,8 +299,18 @@
       accept="application/json,.json"
       hidden
     />
-    <dialog id="imageModal">
-      <button id="closeModal">关闭 ×</button><img id="modalImg" alt="四视图大图" />
+    <dialog id="imageModal" aria-label="全屏图片预览">
+      <div class="viewer-toolbar">
+        <span class="viewer-hint" id="viewerHint" role="status" hidden></span>
+        <button type="button" id="toggleFullscreen" title="退出全屏并关闭预览（Esc）">
+          ⛶ 全屏
+        </button>
+        <button type="button" id="closeModal" title="关闭（Esc）">关闭 ×</button>
+      </div>
+      <button type="button" id="prevImage" class="viewer-arrow prev" aria-label="上一个角色">‹</button>
+      <img id="modalImg" alt="四视图大图" />
+      <button type="button" id="nextImage" class="viewer-arrow next" aria-label="下一个角色">›</button>
+      <div class="viewer-caption" id="viewerCaption" aria-live="polite"></div>
     </dialog>
     <script src="scripts/character-schema.js"></script>
     <script src="scripts/character-editor.js"></script>

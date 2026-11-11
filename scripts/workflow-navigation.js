@@ -35,7 +35,7 @@
         paramsCard.className = 'panel';
         paramsCard.style.padding = '16px';
         paramsCard.innerHTML =
-          '<h3 style="color:#674b95;margin:0 0 14px">✦ 人物详细参数（25项）</h3>';
+          '<h3 style="color:#674b95;margin:0 0 14px">✦ 人物详细参数（30项）</h3>';
         paramsCard.append(params);
         params.hidden = false;
         stages[0].append(paramsCard);
@@ -159,8 +159,11 @@
           setSceneImageVisible(false);
         };
         openScenePreview.onclick = () => {
-          document.getElementById('modalImg').src = sceneImage.src;
-          document.getElementById('imageModal').showModal();
+          const title = document.getElementById('scenePreviewTitle').textContent.trim();
+          openImageViewer(sceneImage.src, {
+            mode: 'scene',
+            caption: title ? '场景 · ' + title : '场景预览',
+          });
         };
         function updateScenePreview() {
           const { location, category } = sceneSettings;
