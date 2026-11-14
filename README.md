@@ -41,7 +41,7 @@ cd MuseFrame-Studio
 | `images/favicon.svg` | 浏览器标签页图标 |
 | `人物设定.txt`、`场景设计.txt` | 人物与场景的预设录入模板 |
 
-内置人物方案位于 `scripts/character-editor.js`，人物字段选项位于 `scripts/character-schema.js`。场景地点及分类位于 `scripts/scene-settings.js`，内置场景模板位于 `scripts/scene-library.js`。
+内置人物方案位于 `scripts/character-editor.js`，人物字段选项位于 `scripts/character-schema.js`。场景地点及分类位于 `scripts/scene-settings.js`，内置场景模板位于 `scripts/scene-library.js`。场景预览图放在 `images/scenes/`，文件名需与地点名一致。
 
 ## GitHub Pages
 

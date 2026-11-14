@@ -11,12 +11,21 @@
         navy: 'navy-academy.png',
       };
       const imageFiles = Object.fromEntries(
-        [...Object.keys(legacyImageFiles), 'starTearBride', 'azureWave', 'cherrySweetheart', 'moonlitDancer', 'crimsonBlossom', 'peachSatin', 'inkTassel', 'duskSakura', 'moonWhiteDream', 'crimsonPhantom', 'starMoon', 'morningDew', 'berryStarCandy', 'neonPatrol', 'tidalGlass', 'creamWhisper', 'inkFrost', 'nightVelvet', 'mintPhantom', 'obsidianSweet', 'amethystButterfly', 'nightBanquet', 'moonButterfly', 'mossGlow', 'mintVeilDancer', 'creamUrbanSport', 'sakuraBunny', 'silverTube', 'creamFleece', 'greyKnit', 'frostWhiteSport', 'mochaSilhouette', 'midnightSheen', 'sunnyBlueDream', 'frostFeather', 'silverBunnyNight', 'violetWhisper', 'violetButterfly', 'purpleGaze', 'frostBluePrincess', 'snowMint'].map((key) => [
+        [...Object.keys(legacyImageFiles), 'starTearBride', 'azureWave', 'cherrySweetheart', 'moonlitDancer', 'crimsonBlossom', 'peachSatin', 'inkTassel', 'duskSakura', 'moonWhiteDream', 'crimsonPhantom', 'starMoon', 'morningDew', 'berryStarCandy', 'neonPatrol', 'tidalGlass', 'creamWhisper', 'inkFrost', 'nightVelvet', 'mintPhantom', 'obsidianSweet', 'amethystButterfly', 'nightBanquet', 'moonButterfly', 'mossGlow', 'mintVeilDancer', 'creamUrbanSport', 'sakuraBunny', 'silverTube', 'creamFleece', 'greyKnit', 'frostWhiteSport', 'mochaSilhouette', 'midnightSheen', 'sunnyBlueDream', 'frostFeather', 'silverBunnyNight', 'violetWhisper', 'violetButterfly', 'purpleGaze', 'frostBluePrincess', 'snowMint', 'frostWingSaint', 'peachBunny', 'sakuraFairy', 'honeyBunny', 'moonTassel', 'blossomDance', 'whiteLace', 'inkLace', 'inkButterfly'].map((key) => [
           key,
           builtInPlans[key].label.replace('｜原创示范', '') + '.png',
         ]),
       );
       const descriptions = {
+        inkButterfly: '墨蝶绮梦 · 黑色蕾丝边连体短裤、白色镂空蕾丝长袜与厚底乐福',
+        inkLace: '墨蕾夜蝶 · 黑色贴身短袖与高腰热裤、巴洛克蕾丝连裤袜',
+        whiteLace: '白蕾丝绮梦 · 白色蕾丝边连体短裤、蕾丝蝴蝶结与黑白高筒靴',
+        blossomDance: '花漾轻舞 · 浅粉碎花露肩短上衣、层叠荷叶边短裙与透明粗跟',
+        moonTassel: '月影流苏 · 白色挂颈流苏上衣、高腰裹合长裙与赤足舞姿',
+        honeyBunny: '蜜粉兔姬 · 粉嫩吊带与百褶短裙、白粉兔耳发箍与透明高跟',
+        sakuraFairy: '绮樱花语 · 雾灰紫长编发、薄荷灰绿单肩刺绣礼服与粉蝶结飘带',
+        peachBunny: '绒兔蜜桃 · 粉色超长发、毛绒兔耳头饰与洛丽塔蓬蓬短裙',
+        frostWingSaint: '霜羽圣姬 · 银白羽翼冠饰、珍珠白刺绣礼服与拖地羽片长裙',
         snowMint: '雪绒薄荷 · 奶白麻花毛衣、白百褶短裙与薄荷蝴蝶结厚底靴',
         frostBluePrincess: '霜蓝绮姬 · 银白短卷发与心形翘发、宝蓝泡泡袖宫廷短礼服',
         purpleGaze: '浅紫粉发 · 黑色亮面露背短上衣、高腰热裤与长筒漆皮靴',
@@ -70,6 +79,15 @@
         starMoon: '深黑蓝波浪长发与冷灰蓝眼眸，搭配金色星座刺绣的午夜蓝宫廷礼服、弯月星芒发饰、蓝宝石首饰与前短后长的透明星纱裙摆。',
       };
       const palettes = {
+        inkButterfly: ['#111013', '#211f23', '#f7f5f2', '#e8b9be'],
+        inkLace: ['#0e0d10', '#2a272b', '#1b1a1e', '#e5b8bd'],
+        whiteLace: ['#fbfaf8', '#e9e6e1', '#141215', '#7a5b45'],
+        blossomDance: ['#f3d9de', '#faf3ec', '#e3c9cf', '#3b2a25'],
+        moonTassel: ['#f8f6f2', '#e6e3dc', '#d6d2c8', '#3a2a22'],
+        honeyBunny: ['#f4bfd0', '#fbe9ee', '#e8a6bd', '#3a2418'],
+        sakuraFairy: ['#cfd6c6', '#d8cfe0', '#f3c9d2', '#d9bf86'],
+        peachBunny: ['#f7c8d4', '#fbf6ef', '#f2a7bd', '#f6dc6b'],
+        frostWingSaint: ['#f7f7f5', '#e3e6ea', '#a9c8e0', '#c9d4de'],
         snowMint: ['#f4efe3', '#e9e1d2', '#bfe0d2', '#cfc6b4'],
         frostBluePrincess: ['#f6f2ea', '#1d3a86', '#bcd9ef', '#c9a34e'],
         purpleGaze: ['#0d0d10', '#c9b6d8', '#e6d6e6', '#d92b2b'],
@@ -123,6 +141,15 @@
         starMoon: ['#121c39', '#253354', '#a1b6d0', '#d1b581'],
       };
       const order = [
+        'inkButterfly',
+        'inkLace',
+        'whiteLace',
+        'blossomDance',
+        'moonTassel',
+        'honeyBunny',
+        'sakuraFairy',
+        'peachBunny',
+        'frostWingSaint',
         'snowMint',
         'frostBluePrincess',
         'purpleGaze',
