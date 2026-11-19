@@ -202,6 +202,12 @@
         'navy',
         'starMoon',
       ];
+      for (const [key, preset] of Object.entries(parameterPresets)) {
+        imageFiles[key] = preset.image;
+        descriptions[key] = preset.description;
+        palettes[key] = preset.palette;
+      }
+      order.unshift(...Object.keys(parameterPresets));
       function imagePath(k) {
         return imageFiles[k] ? 'images/characters/' + imageFiles[k] : '';
       }

@@ -1859,6 +1859,9 @@
         poseLegs: "双腿自然向下伸展，髋部保持正向，膝关节基本伸直，左右腿之间留有适度间距；画面左侧腿（人物右腿）从髋部向下略微向身体外侧延伸，小腿基本垂直，右脚稳定着地，鞋尖朝向前方；画面右侧腿（人物左腿）采用相近的直立姿态，膝部与脚踝自然对齐，左脚落于身体右侧，鞋尖基本朝前；双脚保持适度分开，鞋底平稳接触地面，没有明显踮脚、交叉或抬腿动作。",
         poseContact: "双手分别贴合腰部左右两侧，手指轻微弯曲并与衣身接触，双肘向外突出，使上臂、前臂与腰侧之间形成近似三角形的开放空间；长卷发自然垂落于肩部与胸前，画面左侧发束局部覆盖肩带附近及衣身外缘；双腿彼此分离，没有交叉遮挡，白色长袜沿小腿自然贴合，袜口与膝部之间保留少量肌肤过渡；双脚通过厚底乐福鞋稳定着地，连体短裤随叉腰站姿保持平整自然的贴身轮廓。",
       };
+      Object.entries(parameterPresets).forEach(([key, preset]) => {
+        builtInPlans[key] = preset.plan;
+      });
       const planKeys = fields.map((f) => f[0]);
       let activePlan = 'mist';
       let baseline = null;
@@ -2041,7 +2044,7 @@
             if (!allOptions(f).includes(values[id])) {
               const o = document.createElement('option');
               o.value = values[id];
-              o.textContent = values[id].length > 38 ? values[id].slice(0, 38) + '…' : values[id];
+              o.textContent = values[id] ? (values[id].length > 38 ? values[id].slice(0, 38) + '…' : values[id]) : '未设置';
               o.dataset.currentDescription = 'true';
               sel.append(o);
             }
@@ -2192,6 +2195,7 @@
           const value = characterValues[key];
           return [key, authoredFields.has(key) ? value : (builtInAppearance[key].get(value) ?? value)];
         }));
+        const labeled = (label, value) => value && value.trim() ? label + '：' + value : '';
         return [
           section('01 · 美术定位', [
             '原创成年女性角色',
@@ -2201,33 +2205,33 @@
           ]),
           '',
           section('02 · 人物识别', [
-            '面型：' + v.face,
-            '眉形：' + v.brow,
-            '眼睑与眼型：' + v.eyes,
-            '虹膜：' + v.iris,
-            '鼻部：' + v.nose,
-            '唇部：' + v.lips,
-            '皮肤：' + v.skin,
-            '妆容：' + v.makeup,
+            labeled('面型', v.face),
+            labeled('眉形', v.brow),
+            labeled('眼睑与眼型', v.eyes),
+            labeled('虹膜', v.iris),
+            labeled('鼻部', v.nose),
+            labeled('唇部', v.lips),
+            labeled('皮肤', v.skin),
+            labeled('妆容', v.makeup),
           ]),
           '',
           section('03 · 发型与服装', [
-            '发型：' + v.hair,
-            '刘海：' + v.bangs,
-            '发饰与耳饰：' + v.accessory,
-            '上衣：' + v.top,
-            '领部：' + v.neckline,
+            labeled('发型', v.hair),
+            labeled('刘海', v.bangs),
+            labeled('发饰与耳饰', v.accessory),
+            labeled('上衣', v.top),
+            labeled('领部', v.neckline),
             ...(!portrait ? [
-              '袖部：' + v.sleeve,
-              '下装：' + v.bottom,
-              '袜类：' + v.socks,
-              '鞋履：' + v.shoes,
+              labeled('袖部', v.sleeve),
+              labeled('下装', v.bottom),
+              labeled('袜类', v.socks),
+              labeled('鞋履', v.shoes),
             ] : []),
-            '配色：' + v.palette,
-            '材料：' + v.fabric,
-            '图案：' + v.pattern,
-            '颈部饰件：' + v.neckjewelry,
-            ...(!portrait ? ['剪裁与层级：' + v.outfitDetail] : []),
+            labeled('配色', v.palette),
+            labeled('材料', v.fabric),
+            labeled('图案', v.pattern),
+            labeled('颈部饰件', v.neckjewelry),
+            ...(!portrait ? [labeled('剪裁与层级', v.outfitDetail)] : []),
           ]),
           '',
           ...(portrait ? [] : [
@@ -2251,8 +2255,8 @@
           return value ? [field[1] + '：' + value] : [];
         });
         const composition = section(group ? title : '05 · ' + title, [
-          ...framing.map((line) => mode === 'five' && poseLines.length && line.startsWith('最右侧参考原图动作姿势')
-            ? '最右侧展示人物设定中的姿势与动作，其余三个全身视图保持中立站姿' : line),
+          ...framing.map((line) => mode === 'five' && poseLines.length && line.startsWith('第五分区优先参考原图')
+            ? '第五分区优先参考原图中的动作与姿态；若没有提供原图，则使用人物设定中的姿势与动作。角色及服装、配饰从头顶至脚底完整入镜，不得超出画面边界' : line),
           ...(!scene.enabled ? [
             mode === 'four' ? '浅灰无缝影棚背景' : '简洁背景，主体轮廓清晰',
           ] : []),
@@ -2273,7 +2277,7 @@
               ...characterPromptBlocks(values, customFields, mode === 'face'),
               ...(!['four', 'face'].includes(mode) && poseLines.length ? [
                 section('姿势与动作', [
-                  ...(mode === 'five' ? ['以下动作仅用于最右侧姿势展示区域'] : []),
+                  ...(mode === 'five' ? ['以下动作仅在未提供原图时用于第五分区'] : []),
                   ...(mode === 'poses' ? ['以下动作适用于造型展示姿态'] : []),
                   ...poseLines,
                 ]),
