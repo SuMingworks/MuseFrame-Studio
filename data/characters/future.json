@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "label": "蓝银未来偶像",
+    "style": 7,
+    "face": 5,
+    "eyes": 4,
+    "iris": 1,
+    "makeup": 7,
+    "hair": 9,
+    "bangs": 3,
+    "accessory": 7,
+    "socks": 5,
+    "shoes": 7,
+    "palette": 9,
+    "mood": 1,
+    "body": 2,
+    "neckline": 6,
+    "sleeve": 0,
+    "fabric": 4,
+    "pattern": 7,
+    "neckjewelry": 3,
+    "outfitDetail": 6,
+    "top": "蓝白银短版未来舞台夹克，不对称肩片、金属感包边与细几何纹理，内搭银白修身上衣",
+    "bottom": "蓝银色分片舞台短裙，硬挺结构片与柔软裙片交替，腰部科技感扣件固定，后片设计完整"
+  },
+  "image": "蓝银未来偶像.png",
+  "legacyImage": "blue-silver-idol.png",
+  "description": "未来舞台 · 蓝白银科技感",
+  "palette": [
+    "#375d9e",
+    "#a8c9f4",
+    "#e7edf6",
+    "#b2b8c4"
+  ]
+}

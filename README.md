@@ -1,8 +1,8 @@
-# 灵感绘境 · MuseFrame Studio
+# NimeVista
 
-灵感绘境是一个角色与场景提示词工作台。你可以从内置方案开始，调整五官、发型、服装和环境，再生成可复制或下载的提示词，供外部图像生成工具使用。
+NimeVista 是一个角色与场景提示词工作台。你可以从内置方案开始，调整五官、发型、服装和环境，再生成可复制或下载的提示词，供外部图像生成工具使用。
 
-[打开在线工作台](https://sumingworks.github.io/MuseFrame-Studio/)
+[打开在线工作台](https://sumingworks.github.io/NimeVista/)
 
 ## 本地使用
 
@@ -11,8 +11,8 @@
 注意：`file://` 和 `http://127.0.0.1` 属于不同的浏览器存储域，草稿、个人方案和自定义词库不会自动互通。需要迁移时，先在旧页面使用「备份全部方案与词库」，再在新页面使用「恢复完整备份」。
 
 ```bash
-git clone https://github.com/SuMingworks/MuseFrame-Studio.git
-cd MuseFrame-Studio
+git clone https://github.com/SuMingworks/NimeVista.git
+cd NimeVista
 ```
 
 ## 工作台流程
@@ -36,12 +36,15 @@ cd MuseFrame-Studio
 | `index.html` | 工作台入口 |
 | `styles/studio.css` | 页面样式 |
 | `scripts/` | 人物编辑、场景设置、提示词生成、方案存储和流程导航 |
+| `data/characters/` | 内置人物预设，一人一份 JSON |
 | `images/characters/` | 人物方案预览图 |
 | `images/scenes/` | 场景预览图 |
 | `images/favicon.svg` | 浏览器标签页图标 |
 | `人物设定.txt`、`场景设计.txt` | 人物与场景的预设录入模板 |
 
-内置人物方案位于 `scripts/character-editor.js`，人物字段选项位于 `scripts/character-schema.js`。场景地点及分类位于 `scripts/scene-settings.js`，内置场景模板位于 `scripts/scene-library.js`。场景预览图放在 `images/scenes/`，文件名需与地点名一致。
+内置人物方案位于 `data/characters/<ID>.json`，人物字段选项位于 `scripts/character-schema.js`。修改人物 JSON 后，运行 `node scripts/build-character-library.mjs` 更新网页使用的 `scripts/character-library.js`，提交时包含生成文件。新增人物默认追加到列表末尾，可编辑 `data/characters/index.json` 调整排序。
+
+场景地点及分类位于 `scripts/scene-settings.js`，内置场景模板位于 `scripts/scene-library.js`。场景预览图放在 `images/scenes/`，文件名需与地点名一致。
 
 ## GitHub Pages
 

@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "label": "美式街头学院",
+    "style": 4,
+    "face": 2,
+    "eyes": 0,
+    "iris": 2,
+    "makeup": 0,
+    "hair": 8,
+    "bangs": 3,
+    "accessory": 3,
+    "socks": 7,
+    "shoes": 5,
+    "palette": 6,
+    "mood": 2,
+    "body": 1,
+    "neckline": 8,
+    "sleeve": 0,
+    "fabric": 2,
+    "pattern": 3,
+    "neckjewelry": 6,
+    "outfitDetail": 1,
+    "top": "酒红与黑色拼色短版棒球夹克，罗纹领口与袖口、按扣门襟、学院徽章；内搭奶白色棉质上衣",
+    "bottom": "黑色高腰百褶短裙，褶距均匀、裙腰贴合，背面延续相同褶片与缝线"
+  },
+  "image": "美式街头学院.png",
+  "legacyImage": "street-academy.png",
+  "description": "都市街头 · 休闲学院风",
+  "palette": [
+    "#46546b",
+    "#d9d0bc",
+    "#7f8c9d",
+    "#302d33"
+  ]
+}

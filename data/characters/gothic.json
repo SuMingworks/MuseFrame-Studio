@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "label": "哥特甜酷少女",
+    "style": 2,
+    "face": 4,
+    "eyes": 2,
+    "iris": 3,
+    "makeup": 4,
+    "hair": 6,
+    "bangs": 4,
+    "accessory": 8,
+    "socks": 3,
+    "shoes": 4,
+    "palette": 4,
+    "mood": 1,
+    "body": 2,
+    "neckline": 3,
+    "sleeve": 0,
+    "fabric": 8,
+    "pattern": 6,
+    "neckjewelry": 2,
+    "outfitDetail": 2,
+    "top": "黑色短版皮革翻领外套，银色拉链与扣带细节，内搭冷白色修身罗纹上衣；前后肩线、衣摆和袖口结构明确",
+    "bottom": "黑色高腰立体百褶短裙，宽腰带与银色链条沿腰侧悬垂，裙褶从腰部向裙缘连续展开，后视褶距统一"
+  },
+  "image": "哥特甜酷少女.png",
+  "legacyImage": "gothic-sweet.png",
+  "description": "暗色甜美 · 皮革百褶与银饰",
+  "palette": [
+    "#1b1923",
+    "#59515f",
+    "#b5aebd",
+    "#e7e2e9"
+  ]
+}

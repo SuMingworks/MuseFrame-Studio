@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "label": "海军学院偶像",
+    "style": 9,
+    "face": 2,
+    "eyes": 3,
+    "iris": 2,
+    "makeup": 1,
+    "hair": 7,
+    "bangs": 1,
+    "accessory": 7,
+    "socks": 6,
+    "shoes": 7,
+    "palette": 10,
+    "mood": 2,
+    "body": 1,
+    "neckline": 7,
+    "sleeve": 7,
+    "fabric": 2,
+    "pattern": 3,
+    "neckjewelry": 6,
+    "outfitDetail": 7,
+    "top": "海军蓝与奶白配色短袖海军领上衣，金色细滚边、胸前蓝色缎带结饰与明确的前后领片",
+    "bottom": "海军蓝高腰百褶短裙，金色细滚边沿裙缘分布，褶片对称且背部延续相同设计"
+  },
+  "image": "海军学院偶像.png",
+  "legacyImage": "navy-academy.png",
+  "description": "海军学院 · 蓝白金制服",
+  "palette": [
+    "#263f6b",
+    "#f7f5ef",
+    "#cfad66",
+    "#91a8c8"
+  ]
+}

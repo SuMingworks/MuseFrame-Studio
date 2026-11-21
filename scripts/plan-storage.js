@@ -188,7 +188,7 @@
       // Complete backup: personal plans, custom option library, and optionally the current draft.
       document.getElementById('exportAll').onclick = () =>
         download(
-          'MuseFrame-Studio-完整备份.json',
+          'NimeVista-完整备份.json',
           JSON.stringify(
             {
               format: 'MuseFrameStudioBackup',

@@ -1,4 +1,4 @@
-# MuseFrame Studio 项目指南
+# NimeVista 项目指南
 
 本项目是人物与场景提示词工作台，使用 HTML、CSS 和原生 JavaScript。直接用浏览器打开根目录的 `index.html` 即可运行，无需安装依赖或构建。
 
@@ -9,8 +9,8 @@
 | 页面结构、按钮、面板、脚本加载顺序 | `index.html` |
 | 页面布局、卡片、响应式样式 | `styles/studio.css` |
 | 人物字段、默认值、可选词条 | `scripts/character-schema.js` 中的 `schema` |
-| 内置人物参数、应用人物方案 | `scripts/character-editor.js` 中的 `builtInPlans`、`snapshotForPlan`、`applyPreset` |
-| 人物预设卡片、排序、简介、配色、预览图 | `scripts/plan-preview.js` 中的 `renderPlanList`、`order`、`descriptions`、`palettes`、`imageFiles` |
+| 内置人物参数、简介、配色、预览图 | `data/characters/<ID>.json` |
+| 人物预设顺序、卡片渲染、应用 | `data/characters/index.json`、`scripts/plan-preview.js` 的 `renderPlanList`、`scripts/character-editor.js` 的 `snapshotForPlan` 和 `applyPreset` |
 | 出图模式、画幅、分辨率和画质 | `scripts/output-settings.js` |
 | 场景地点、分类、环境参数 | `scripts/scene-settings.js` |
 | 内置场景模板、自定义场景库 | `scripts/scene-library.js` |
@@ -21,10 +21,10 @@
 
 ## 新增内置人物预设
 
-1. 在 `character-editor.js` 的 `builtInPlans` 中添加唯一键、`label` 和人物字段。字段键查 `character-schema.js`，中文录入模板见 `人物设定.txt`。
-2. 把同一个键加入 `plan-preview.js` 的 `order`，再填简介和配色。下拉菜单读取 `builtInPlans`，左侧卡片按 `order` 渲染，两处都需要登记。可参考 `morningDew`（晨露花语）。
-3. 有预览图时，将图片放到 `images/characters/`，并在 `imageFiles` 的生成逻辑中注册该键。当前文件名按方案名称生成；没有配置图片时，卡片会显示占位图标。
-4. 重新打开或刷新本地 `index.html`，确认左侧卡片和下拉菜单均可找到该方案。点击卡片，检查人物名称、参数和预览，再生成一次提示词确认设定已生效。
+1. 在 `data/characters/` 中新增以唯一 ID 命名的 JSON，参考 `morningDew.json`。将人物名称和参数填入 `plan`，简介和卡片配色分别填入 `description` 和 `palette`。字段键查 `character-schema.js`。
+2. 有预览图时，将图片放到 `images/characters/`。多张图在人物 JSON 的 `images` 数组中按顺序填写文件名，第一张用于卡片和默认预览，打开大图后可用左右键浏览同一角色的图片。单张图也可继续使用 `image` 字段。新增人物默认追加到末尾。如需置于指定位置，可在 `index.json` 的 `cardOrder` 和 `presetOrder` 中分别调整卡片和下拉顺序。
+3. 运行 `node scripts/build-character-library.mjs` 更新 `scripts/character-library.js`，提交时包含生成文件。可运行 `node scripts/build-character-library.mjs --check` 验证生成文件与人物 JSON 一致。
+4. 刷新 `index.html`，检查人物卡片、下拉菜单、参数和预览，再生成一次提示词。
 
 ## 新增内置场景
 

@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "label": "Y2K彩虹运动",
+    "style": 3,
+    "face": 1,
+    "eyes": 3,
+    "iris": 2,
+    "makeup": 1,
+    "hair": 1,
+    "bangs": 2,
+    "accessory": 4,
+    "socks": 7,
+    "shoes": 5,
+    "palette": 5,
+    "mood": 2,
+    "body": 1,
+    "neckline": 8,
+    "sleeve": 0,
+    "fabric": 2,
+    "pattern": 3,
+    "neckjewelry": 6,
+    "outfitDetail": 3,
+    "top": "粉蓝黄拼色短版拉链运动夹克，轻薄防风织物，撞色袖片与罗纹袖口；内搭白色圆领短上衣",
+    "bottom": "奶白色高腰运动短裤，粉蓝侧边条纹，松紧腰头与口袋缝线清楚，裤腿长度对称"
+  },
+  "image": "Y2K彩虹运动.png",
+  "legacyImage": "y2k-rainbow-sport.png",
+  "description": "千禧运动 · 彩虹拼色",
+  "palette": [
+    "#f4b6cf",
+    "#9cc8e8",
+    "#f3dc87",
+    "#faf7f1"
+  ]
+}

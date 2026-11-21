@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "label": "古典花园洛丽塔",
+    "style": 6,
+    "face": 1,
+    "eyes": 1,
+    "iris": 2,
+    "makeup": 6,
+    "hair": 11,
+    "bangs": 1,
+    "accessory": 5,
+    "socks": 4,
+    "shoes": 6,
+    "palette": 8,
+    "mood": 1,
+    "body": 1,
+    "neckline": 9,
+    "sleeve": 1,
+    "fabric": 6,
+    "pattern": 4,
+    "neckjewelry": 5,
+    "outfitDetail": 5,
+    "top": "奶茶粉色古典洋装上身，蕾丝花边立领、短泡泡袖、收腰拼片与前胸缎带结饰；肩部与背部缝合关系完整",
+    "bottom": "象牙白与奶茶粉层叠钟形蓬蓬裙，裙撑体积适中，裙缘立体花形与多层蕾丝滚边，背面同样完整"
+  },
+  "image": "古典花园洛丽塔.png",
+  "legacyImage": "garden-lolita.png",
+  "description": "古典花园 · 蕾丝与花卉",
+  "palette": [
+    "#c9a5b4",
+    "#f2e7e0",
+    "#b18f79",
+    "#9c9b87"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "label": "暗黑朋克少女",
+    "style": 1,
+    "face": 5,
+    "eyes": 4,
+    "iris": 3,
+    "makeup": 3,
+    "hair": 5,
+    "bangs": 4,
+    "accessory": 8,
+    "socks": 3,
+    "shoes": 3,
+    "palette": 3,
+    "mood": 1,
+    "body": 2,
+    "neckline": 6,
+    "sleeve": 0,
+    "fabric": 8,
+    "pattern": 6,
+    "neckjewelry": 3,
+    "outfitDetail": 2,
+    "top": "炭黑短版机车革面外套，宽翻领、斜拉链、银色扣件与肩部接片清楚；内搭深灰贴身背心，袖口与背部缝线完整",
+    "bottom": "黑色高腰微A形短裙，裙片利落，侧腰金属扣带与可拆卸链条装饰，后片接缝与前片统一"
+  },
+  "image": "暗黑朋克少女.png",
+  "legacyImage": "dark-punk.png",
+  "description": "暗黑机能 · 银灰狼尾与皮革",
+  "palette": [
+    "#1c1b22",
+    "#777883",
+    "#c1c3ca",
+    "#383942"
+  ]
+}

@@ -232,7 +232,7 @@
       // Complete backup includes independent personal scene library; old backups remain importable.
       document.getElementById('exportAll').onclick = () =>
         download(
-          'MuseFrame-Studio-完整备份.json',
+          'NimeVista-完整备份.json',
           JSON.stringify(
             {
               format: 'MuseFrameStudioBackup',

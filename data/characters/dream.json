@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "label": "粉蓝梦幻偶像",
+    "style": 8,
+    "face": 1,
+    "eyes": 3,
+    "iris": 1,
+    "makeup": 6,
+    "hair": 11,
+    "bangs": 1,
+    "accessory": 4,
+    "socks": 5,
+    "shoes": 7,
+    "palette": 5,
+    "mood": 2,
+    "body": 1,
+    "neckline": 4,
+    "sleeve": 1,
+    "fabric": 5,
+    "pattern": 5,
+    "neckjewelry": 4,
+    "outfitDetail": 6,
+    "top": "粉蓝拼色短款偶像舞台上衣，甜心领、蓬起短袖、蓝粉缎带与珍珠感滚边，收腰拼片清晰",
+    "bottom": "粉蓝渐变层叠舞台短裙，欧根纱与细褶裙片交错，腰侧蝴蝶结与后视裙层相互对应"
+  },
+  "image": "粉蓝梦幻偶像.png",
+  "legacyImage": "pastel-idol.png",
+  "description": "梦幻偶像 · 粉蓝薄纱",
+  "palette": [
+    "#e8a9ce",
+    "#9bc7f4",
+    "#f4e6f2",
+    "#a8a2db"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "label": "复古草莓甜心",
+    "style": 5,
+    "face": 1,
+    "eyes": 1,
+    "iris": 2,
+    "makeup": 5,
+    "hair": 7,
+    "bangs": 1,
+    "accessory": 4,
+    "socks": 1,
+    "shoes": 6,
+    "palette": 7,
+    "mood": 2,
+    "body": 1,
+    "neckline": 4,
+    "sleeve": 1,
+    "fabric": 6,
+    "pattern": 1,
+    "neckjewelry": 4,
+    "outfitDetail": 5,
+    "top": "奶白色短款泡泡袖甜心领上衣，红色细缎带与蕾丝滚边，袖山蓬起、袖口轻收",
+    "bottom": "草莓红与奶白配色层叠短裙，红白散点圆纹均匀，裙缘荷叶边与小型蝴蝶结错落分布"
+  },
+  "image": "复古草莓甜心.png",
+  "legacyImage": "retro-strawberry.png",
+  "description": "复古甜心 · 草莓红与奶白",
+  "palette": [
+    "#bd344d",
+    "#f7eee5",
+    "#e8a7b3",
+    "#6c9b78"
+  ]
+}
